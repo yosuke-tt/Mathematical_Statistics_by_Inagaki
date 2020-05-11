@@ -148,10 +148,10 @@ $$
 (3)
 
 $$
-E[X]=\frac{1}{2}\int^\infty_0 x^3 exp(-x)dx = \frac{1}{2}\Gamma(4)=2\\
-E[X^2]=\frac{1}{2}\Gamma(5) = 6\\
+E[X]=\frac{1}{2}\int^\infty_0 x^3 exp(-x)dx = \frac{1}{2}\Gamma(4)=3\\
+E[X^2]=\frac{1}{2}\Gamma(5) = 12\\
 
-Var(X) = 6  - 2^2 = 2
+Var(X) = 12  - 3^2 = 3
 $$
 
 $$
@@ -167,5 +167,72 @@ Var(Y)=\frac{3}{4}
 $$
 
 $$
-E[XY] =\frac{1}{2}\int_{0}^\infty\int_{0}^\infty x^4yexp(-x(1+y))dydx\\=\frac{1}{2}\int_{0}^\infty\int_{0}^\infty x^4yexp(-x(1+y))dydx\\=\frac{1}{2}\int_{0}^\infty\int_{0}^\infty x^3(\frac{z}{x}-1)exp(-z)dzdx\\=\frac{1}{2}\int_{0}^\infty\left(\int_{0}^\infty x^2zexp(-z)dz-\int_{0}^\infty x^3exp(-z)dz\right)dx\\=\frac{1}{2}\int_{0}^\infty\left(x^2+ x\right)dx=\frac{1}{2}[1/3x^3+1/2x^2]^\infty_0
+E[XY] =\int\int xyf(x,y)dydx\\=\int\int yf(y|x)dy \ xf(x)dx\\=\int_{0}^\infty\int_{0}^\infty xyexp(-xy)  \ dy\  \frac{1}{2}x^3exp(-x)dx\\=\int_{0}^\infty \frac{1}{2}x^2exp(-x)dx=1
+$$
+
+よって、
+$$
+Corr(X,Y) = \frac{Cov(X,Y)}{\sqrt{V(X)V(Y)}}\\=\frac{E[XY]-E[X]E[Y]}{\sqrt{V(X)V(Y)}}\\=\frac{1-3/2}{\sqrt{9/4}}=-\frac{1}{3}
+$$
+
+
+# 4.6
+
+## この問題の気持ち
+前問と同じ、ただの計算。\
+形が似ているときは、その分布を意識して計算する。
+
+
+## (1)
+$$
+f_x(x) = \frac{1}{\alpha\beta}exp\left(-x\left(\frac{1}{\alpha}-\frac{1}{\beta}\right)\right)\int^\infty_x exp\left(-\frac{y}{\beta}\right)dy\\ = \frac{1}{\alpha}exp\left(-\frac{x}{\alpha}\right)
+$$
+
+$$
+f_y(y)=\frac{1}{\alpha\beta}exp\left(-\frac{y}{\beta}\right)\int^y_0 exp\left(-x\left(\frac{1}{\alpha}-\frac{1}{\beta}\right)\right)dy\\=\frac{1}{\beta-\alpha}\left\{exp\left(-\frac{y}{\beta}\right)-exp\left(-\frac{y}{\alpha}\right)\right\}
+$$
+
+## (2)
+$$
+f(x,y)=f(y|x)f_x(x)
+$$
+より、
+$$
+f(x,y) = \frac{1}{\alpha}exp\left(-\frac{x}{\alpha}\right)* \frac{1}{\beta}exp\left(-\frac{y-x}{\beta}\right)
+$$
+$$
+f(y|x)=\frac{1}{\beta}exp\left(-\frac{y-x}{\beta}\right)
+$$
+
+
+## (3)
+
+$f_x$は指数分布なので、
+$$
+E_X[X]=\alpha \\
+V_X(x)=\alpha^2
+$$
+
+次に、$f_y$にかんして、計算する。\
+指数分布を意識して、
+たとえば、
+$$
+g(x) = exp\left(-\frac{y}{\beta}\right)
+$$
+の期待値(密度関数出ないので言いにくい)は、$\beta g(x)\frac{1}{\beta}$を考えると、$\beta^2$となることがわかる。
+よって、
+$$
+E_Y[Y]=\frac{\alpha^2+\beta^2}{\beta-\alpha}=\alpha+\beta
+$$
+$$
+E_Y[Y^2]=\frac{2(\beta^3-\alpha^3)}{\beta-\alpha}=2(\beta^2+\alpha\beta+\alpha^2)\\
+Var(Y^2) = \beta^2+\alpha^2
+$$
+
+$$
+E[XY] = \int_0^\infty\int_x^\infty yf(y|x) \ dy \ xf(x) \ dx\\=\int^\infty_0 (x+\beta)x\frac{1}{\alpha}exp\left(-\frac{x}{\alpha}\right)dx\\=\frac{1}{\alpha}\left(\int^\infty_0 x^2exp\left(-\frac{x}{\alpha}\right)+\beta x exp\left(-\frac{x}{\alpha}\right)dx\right)=2\alpha^2+\beta\alpha
+$$
+
+$$
+Corr(X,Y)=\frac{E[XY]-E[X]E[Y]}{\sqrt{V(X)V(Y)}}=\frac{\alpha}{\sqrt{\alpha^2+\beta^2}}
 $$
